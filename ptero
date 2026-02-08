@@ -91,7 +91,7 @@ show_menu() {
     print_menu_option "10" "Installation de Jexactyl"
     print_menu_option "0" "Sortir du gestionnaire"
     echo -e "\n${DANGER}══════════════════════════════════════════════════════════${RESET}"
-    read -p $'\e[93m\e[1m Sélectionner une option [0-10] : \e[0m' choix
+    read -p $'\e[93m\e[1m Sélectionner une option [0-10] : \e[0m' choice
     echo
 }
 # Welcome
