@@ -1,0 +1,195 @@
+#!/usr/bin/env bash
+
+# ===================================================
+#  ALEXXP62 CONSOLE - NEXT GEN ULTRA EDITION
+#                     2025 Edition
+# ===================================================
+#  Discord : https://discord.gg/steamunlocker
+# ===================================================
+
+set -e
+
+# Next-Gen Neon Color Theme
+RESET="\e[0m"
+BOLD="\e[1m"
+DIM="\e[2m"
+UNDERLINE="\e[4m"
+
+CYAN="\e[96m"
+BLUE="\e[94m"
+PURPLE="\e[95m"
+GREEN="\e[92m"
+YELLOW="\e[93m"
+RED="\e[91m"
+WHITE="\e[97m"
+
+NEON_GREEN="\e[38;5;82m"
+NEON_PURPLE="\e[38;5;165m"
+NEON_BLUE="\e[38;5;75m"
+GLOW="\e[38;5;51m"
+DANGER="\e[38;5;196m"
+
+clear
+
+echo -e "${NEON_PURPLE}${BOLD}             NEXT GEN ULTRA EDITION - 2025${RESET}"
+echo -e "${GLOW}             Avancé • Futuristique • Automatisation d'étlite${RESET}"
+echo -e "${DIM}      Discord: https://discord.gg/steamunlocker${RESET}"
+echo -e "${NEON_BLUE}══════════════════════════════════════════════════════════${RESET}\n"
+
+# Utility Functions
+progress() { echo -e "${NEON_GREEN}${BOLD}➤ $1${RESET}"; }
+success() { echo -e "${GREEN}${BOLD}✓ $1${RESET}"; }
+warning() { echo -e "${YELLOW}${BOLD}! $1${RESET}"; }
+error() { echo -e "${RED}${BOLD}✘ $1${RESET}"; }
+
+print_box_header() {
+    local text="$1"
+    local color="${2:-$NEON_PURPLE}"
+    echo -e "${color}${BOLD}╔══════════════════════════════════════════════════════════╗${RESET}"
+    echo -e "${color}${BOLD}║${RESET} ${WHITE}${BOLD}$text$(printf '%*s' $((58 - ${#text})) '') ${color}${BOLD}║${RESET}"
+    echo -e "${color}${BOLD}╚══════════════════════════════════════════════════════════╝${RESET}\n"
+}
+
+print_menu_option() {
+    local num="$1"
+    local text="$2"
+    echo -e "${NEON_BLUE}   ┌──────────────────────────────────────────────────────┐${RESET}"
+    echo -e "${NEON_BLUE}   │${RESET} ${WHITE}${BOLD}[${NEON_GREEN}${num}${WHITE}]${RESET} ${YELLOW}${text}$(printf '%*s' $((48 - ${#text} - 3)) '') ${NEON_BLUE}│${RESET}"
+    echo -e "${NEON_BLUE}   └──────────────────────────────────────────────────────┘${RESET}"
+}
+
+# Main Menu
+main_menu() {
+    clear
+
+    echo -e "${NEON_PURPLE}${BOLD}                CONSOLE DE GESTION DU DÉVELOPPEMENT${RESET}\n"
+
+    print_box_header "OPTIONS PRINCIPALES" $NEON_PURPLE
+
+    print_menu_option "1" "IDX Tool Setup (Nix + QEMU Environment)"
+    print_menu_option "2" "IDX VPS Maker (Remote Deployment)"
+    print_menu_option "3" "Sortir"
+
+    echo -e "\n${NEON_BLUE}══════════════════════════════════════════════════════════${RESET}"
+    read -p $'\e[93m\e[1m   Sélectionne une option [1-3]: \e[0m' op
+    echo
+}
+
+# Main Loop
+while true; do
+    main_menu
+
+    case $op in
+        1)
+            clear
+          
+            print_box_header "IDX TOOL SETUP" $NEON_PURPLE
+
+            progress "Initialisation du nettoyage de l'espace de travail..."
+            cd ~ || exit 1
+            rm -rf myapp flutter 2>/dev/null
+
+            mkdir -p vps123
+            cd vps123
+
+            if [ ! -d ".idx" ]; then
+                progress "Création d'un environnement de développement IDX..."
+
+                mkdir -p .idx
+                cd .idx
+
+                progress "Génération de la configuration dev.nix..."
+                cat > dev.nix << 'EOF'
+{ pkgs, ... }: {
+  channel = "stable-24.05";
+
+  packages = with pkgs; [
+    unzip
+    openssh
+    git
+    qemu_kvm
+    sudo
+    cdrkit
+    cloud-utils
+    qemu
+    flutter
+    dart
+  ];
+
+  env = {
+    EDITOR = "nano";
+  };
+
+  idx = {
+    extensions = [
+      "Dart-Code.flutter"
+      "Dart-Code.dart-code"
+    ];
+    workspace = {
+      onCreate = {};
+      onStart = {};
+    };
+    previews = {
+      enable = true;
+    };
+  };
+}
+EOF
+
+                success "Configuration de l'outil IDX terminée !"
+                echo -e "\n${GLOW}${BOLD}Location:${RESET} ${WHITE}~/vps123/.idx${RESET}"
+                echo -e "${GLOW}${BOLD}Channel:${RESET}  ${WHITE}Nix Stable 24.05${RESET}"
+                echo -e "${GLOW}${BOLD}Tools:${RESET}    ${WHITE}Flutter, Dart, QEMU, Git, SSH${RESET}\n"
+            else
+                warning "L'environnement IDX existe déjà !"
+                echo -e "   Path: ${WHITE}~/vps123/.idx${RESET}\n"
+            fi
+
+            echo -e "${NEON_BLUE}══════════════════════════════════════════════════════════${RESET}"
+            read -p $'\e[93mPress Enter to return...\e[0m' -r
+            ;;
+
+        2)
+            clear
+            echo -e "${NEON_PURPLE}"
+          
+            print_box_header "IDX VPS MAKER" "$NEON_PURPLE"
+
+            progress "Lancement du gestionnaire de machines virtuelles..."
+            echo -e "\n${CYAN}Diffusion en continu de la dernière version depuis GitHub...${RESET}\n"
+
+            if command -v curl >/dev/null 2>&1; then
+                if bash <(curl -s https://raw.githubusercontent.com/AlexxP624/vps123/refs/heads/main/script); then
+                    success "La session Cloud VM Manager s'est terminée avec succès."
+                else
+                    error "Échec de récupération ou d'exécution du script."
+                    warning "Vérifiez votre connexion Internet ou l'état de GitHub."
+                fi
+            else
+                error "curl n'est pas installé."
+                warning "Installez-le avec : sudo apt install curl (ou équivalent)"
+            fi
+            echo -e "\n${NEON_BLUE}════════════════════════════════════════════════════════════════════${RESET}"
+            read -p $'\e[93mAppuyez sur Entrée pour revenir au menu principal...\e[0m' -r
+            ;;
+
+        3)
+            clear
+            echo -e "${DANGER}"
+     
+            print_box_header "SESSION TERMINÉE" $DANGER
+
+            echo -e "${DIM}Discord: https://discord.gg/steamunlocker${RESET}\n"
+
+            echo -e "${GLOW}${BOLD}À la prochaine session, opérateur ! 🚀${RESET}\n"
+            exit 0
+            ;;
+
+        *)
+            clear
+            print_box_header "SÉLECTION NON VALIDE" $DANGER
+            error "Veuillez saisir une option valide (1–3)"
+            sleep 2
+            ;;
+    esac
+done
