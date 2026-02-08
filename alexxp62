@@ -31,7 +31,7 @@ DANGER="\e[38;5;196m"
 
 clear
 
-echo -e "${NEON_PURPLE}${BOLD}             NEXT GEN ULTRA EDITION - 2025${RESET}"
+echo -e "${NEON_PURPLE}${BOLD}             NEXT GEN ULTRA EDITION - 2026${RESET}"
 echo -e "${GLOW}             Avancé • Futuristique • Automatisation d'étlite${RESET}"
 echo -e "${DIM}      Discord: https://discord.gg/steamunlocker${RESET}"
 echo -e "${NEON_BLUE}══════════════════════════════════════════════════════════${RESET}\n"
@@ -62,7 +62,7 @@ print_menu_option() {
 main_menu() {
     clear
 
-    echo -e "${NEON_PURPLE}${BOLD}                CONSOLE DE GESTION DU DÉVELOPPEMENT${RESET}\n"
+    echo -e "${NEON_PURPLE}${BOLD}              CONSOLE DE GESTION DU DÉVELOPPEMENT${RESET}\n"
 
     print_box_header "OPTIONS PRINCIPALES" $NEON_PURPLE
 
@@ -146,7 +146,7 @@ EOF
             fi
 
             echo -e "${NEON_BLUE}══════════════════════════════════════════════════════════${RESET}"
-            read -p $'\e[93mPress Enter to return...\e[0m' -r
+            read -p $'\e[93mAppuyez sur Entrée pour revenir...\e[0m' -r
             ;;
 
         2)
